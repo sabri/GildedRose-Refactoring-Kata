@@ -7,12 +7,16 @@ namespace csharp
     public class GildedRoseTest
     {
         [Test]
-        public void foo()
+        public void GiledRose_givenRegularItem_SellInAndQualityLower()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 14, Quality = 0 } };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
-            Assert.That(Items[0].Name, Is.EqualTo("fixme"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Items[0].SellIn, Is.EqualTo(13));
+                Assert.That(Items[0].Quality, Is.EqualTo(0));
+            });
         }
     }
 }
