@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace csharp
@@ -21,77 +22,86 @@ namespace csharp
         {
             foreach (Item item in Items)
             {
-                if (!(IsAgedBrie(item.Name)|| IsBackStagePasses(item.Name)))
+                if (IsRegular(item))
                 {
-                    if (item.Quality > 0)
-                    {
-                        if (!IsSulFuares(item.Name))
-                        {
-                            item.Quality--;
-                        }
-                    }
+                    HandleReqularItem(item);
+
                 }
-                else
+                else if (IsAgedBrie(item.Name))
                 {
-                    if (item.Quality < MaxQuality)
-                    {
-                        item.Quality++;
-
-                        if (IsBackStagePasses(item.Name))
-                        {
-                            if (item.SellIn < BACKSTAGE_PASSES_THERESHOLD01)
-                            {
-                                if (item.Quality < MaxQuality)
-                                {
-                                    item.Quality++;
-                                }
-                            }
-
-                            if (item.SellIn < BACKSTAGE_PASSES_THERESHOL02)
-                            {
-                                if (item.Quality < MaxQuality)
-                                {
-                                    item.Quality++;
-                                }
-                            }
-                        }
-                    }
+                    HandleIsAgedBrieItem(item);
                 }
-
-                if (!IsSulFuares(item.Name))
+                else if (IsBackStagePasses(item.Name))
                 {
-                    item.SellIn--;
+                    HandleIsBackStageItem(item);
                 }
-
-                if (item.SellIn < 0)
+                else if (IsSulFuares(item.Name))
                 {
-                    if (!IsAgedBrie(item.Name))
-                    {
-                        if (!IsBackStagePasses(item.Name))
-                        {
-                            if (item.Quality > 0)
-                            {
-                                if (item.Name != SULFURAS)
-                                {
-                                    item.Quality--;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            item.Quality=0;
-                        }
-                    }
-                    else
-                    {
-                        if (item.Quality < MaxQuality)
-                        {
-                            item.Quality++;
-                        }
-                    }
+                    HandleIsSulFURAES(item);
                 }
             }
         }
+
+        private static void HandleIsSulFURAES(Item item)
+        {
+            item.SellIn--;
+        }
+
+        private static void HandleIsBackStageItem(Item item)
+        {
+            item.SellIn--;
+            item.Quality++;
+            if (item.SellIn < BACKSTAGE_PASSES_THERESHOLD01)
+            {
+                item.Quality++;
+            }
+            if (item.SellIn < BACKSTAGE_PASSES_THERESHOL02)
+            {
+                item.Quality++;
+            }
+            if (item.SellIn <= 0)
+            {
+                item.Quality = 0;
+            }
+            if (item.Quality > MaxQuality)
+            {
+                item.Quality = MaxQuality;
+            }
+        }
+
+        private static void HandleIsAgedBrieItem(Item item)
+        {
+            item.SellIn--;
+            item.Quality++;
+            if (item.SellIn <= 0)
+            {
+                item.Quality++;
+            }
+            if (item.Quality > MaxQuality)
+            {
+                item.Quality = MaxQuality;
+            }
+        }
+
+        private static void HandleReqularItem(Item item)
+        {
+            item.SellIn--;
+            item.Quality--;
+            if (item.SellIn <= 0)
+            {
+                item.Quality--;
+            }
+            if (item.Quality < 0)
+            {
+                item.Quality = 0;
+            }
+        }
+
+        private static bool IsRegular(Item item)
+        {
+            return !(IsAgedBrie(item.Name) || IsBackStagePasses(item.Name) || IsSulFuares(item.Name));
+        }
+
         private static bool IsAgedBrie(string name)
         {
             return name == AGED_BRIE;
