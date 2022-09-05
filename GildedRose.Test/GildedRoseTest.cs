@@ -36,7 +36,7 @@ namespace csharp
         [Test]
         public void GiledRose_givenRegularItem_QualityNeverNegative()
         {
-            Item item = DealingWithItems("foo", 15, 0);
+            Item item = DealingWithItems("foo", -1, 0);
                 Assert.That(item.Quality, Is.EqualTo(0));
         }
         //"Aged Brie" actually increases in Quality the older it gets
