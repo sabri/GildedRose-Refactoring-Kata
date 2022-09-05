@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace csharp
 {
@@ -18,78 +19,90 @@ namespace csharp
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (Item item in Items)
             {
-                if (Items[i].Name != AGED_BRIE && Items[i].Name != BACKSTAGE_PASSES)
+                if (!IsAgedBrie(item.Name) && !IsBackStagePasses(item.Name))
                 {
-                    if (Items[i].Quality > 0)
+                    if (item.Quality > 0)
                     {
-                        if (Items[i].Name != SULFURAS)
+                        if (!IsSulFuares(item.Name))
                         {
-                            Items[i].Quality = Items[i].Quality - 1;
+                            item.Quality = item.Quality - 1;
                         }
                     }
                 }
                 else
                 {
-                    if (Items[i].Quality < MaxQuality)
+                    if (item.Quality < MaxQuality)
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
+                        item.Quality = item.Quality + 1;
 
-                        if (Items[i].Name == BACKSTAGE_PASSES)
+                        if (IsBackStagePasses(item.Name))
                         {
-                            if (Items[i].SellIn < BACKSTAGE_PASSES_THERESHOLD01)
+                            if (item.SellIn < BACKSTAGE_PASSES_THERESHOLD01)
                             {
-                                if (Items[i].Quality < MaxQuality)
+                                if (item.Quality < MaxQuality)
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1;
+                                    item.Quality = item.Quality + 1;
                                 }
                             }
 
-                            if (Items[i].SellIn < BACKSTAGE_PASSES_THERESHOL02)
+                            if (item.SellIn < BACKSTAGE_PASSES_THERESHOL02)
                             {
-                                if (Items[i].Quality < MaxQuality)
+                                if (item.Quality < MaxQuality)
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1;
+                                    item.Quality = item.Quality + 1;
                                 }
                             }
                         }
                     }
                 }
 
-                if (Items[i].Name != SULFURAS)
+                if (!IsSulFuares(item.Name))
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    item.SellIn = item.SellIn - 1;
                 }
 
-                if (Items[i].SellIn < 0)
+                if (item.SellIn < 0)
                 {
-                    if (Items[i].Name != AGED_BRIE)
+                    if (!IsAgedBrie(item.Name))
                     {
-                        if (Items[i].Name != BACKSTAGE_PASSES)
+                        if (!IsBackStagePasses(item.Name))
                         {
-                            if (Items[i].Quality > 0)
+                            if (item.Quality > 0)
                             {
-                                if (Items[i].Name != SULFURAS)
+                                if (item.Name != SULFURAS)
                                 {
-                                    Items[i].Quality = Items[i].Quality - 1;
+                                    item.Quality = item.Quality - 1;
                                 }
                             }
                         }
                         else
                         {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                            item.Quality = item.Quality - item.Quality;
                         }
                     }
                     else
                     {
-                        if (Items[i].Quality < MaxQuality)
+                        if (item.Quality < MaxQuality)
                         {
-                            Items[i].Quality = Items[i].Quality + 1;
+                            item.Quality = item.Quality + 1;
                         }
                     }
                 }
             }
+        }
+        private static bool IsAgedBrie(string name)
+        {
+            return name == AGED_BRIE;
+        }
+        private static bool IsBackStagePasses(string name)
+        {
+            return name == BACKSTAGE_PASSES;
+        }
+        private static bool IsSulFuares(string name)
+        {
+            return name == SULFURAS;
         }
     }
 }
