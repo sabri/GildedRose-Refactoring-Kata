@@ -50,6 +50,14 @@ namespace csharp
         {
             item.SellIn--;
             item.Quality-=2;
+            if (item.SellIn <= 0)
+            {
+                item.Quality -= 2;
+            }
+            if(item.Quality< 0)
+            {
+                item.Quality = 0;
+            }
         }
 
         private static void HandleIsSulFURAES(Item item)

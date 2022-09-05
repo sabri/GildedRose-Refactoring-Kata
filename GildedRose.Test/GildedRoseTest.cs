@@ -99,8 +99,26 @@ namespace csharp
         [Test]
         public void GiledRose_givenConjured_QualityDegradstwiceAsFast()
         {
-            Item item = DealingWithItems(GildedRose.Conjured, 0, 26);
+            Item item = DealingWithItems(GildedRose.Conjured, 15, 26);
             Assert.That(item.Quality, Is.EqualTo(24));
+        }
+        [Test]
+        public void GiledRose_givenConjuredPastSellIn_QualityDegradstwiceAsFast()
+        {
+            Item item = DealingWithItems(GildedRose.Conjured, 0, 26);
+            Assert.That(item.Quality, Is.EqualTo(22));
+        }
+        [Test]
+        public void GiledRose_givenConjured_QualityNeverNegativ()
+        {
+            Item item = DealingWithItems(GildedRose.Conjured,15, 0);
+            Assert.That(item.Quality, Is.EqualTo(0));
+        }
+        [Test]
+        public void GiledRose_givenConjuredPastSellIn_QualityNeverNegativ()
+        {
+            Item item = DealingWithItems(GildedRose.Conjured, 0, 0);
+            Assert.That(item.Quality, Is.EqualTo(0));
         }
     }
 }
