@@ -99,7 +99,7 @@ namespace csharp
         [Test]
         public void GiledRose_givenConjured_QualityDegradstwiceAsFast()
         {
-            Item item = DealingWithItems("Conjured Mana Cake", 0, 26);
+            Item item = DealingWithItems(GildedRose.Conjured, 0, 26);
             Assert.That(item.Quality, Is.EqualTo(24));
         }
     }

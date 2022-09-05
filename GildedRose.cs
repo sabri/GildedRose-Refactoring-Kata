@@ -9,7 +9,8 @@ namespace csharp
         public const string AGED_BRIE = "Aged Brie";
         public const string BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
         public const string SULFURAS = "Sulfuras, Hand of Ragnaros";
-         public const int MaxQuality = 50;
+        public const string Conjured = "Conjured Mana Cake";
+        public const int MaxQuality = 50;
          public const int BACKSTAGE_PASSES_THERESHOLD01 = 11;
        public  const int BACKSTAGE_PASSES_THERESHOL02 = 6;
         IList<Item> Items;
@@ -38,8 +39,17 @@ namespace csharp
                 else if (IsSulFuares(item.Name))
                 {
                     HandleIsSulFURAES(item);
+                } else if (IsConjured(item.Name))
+                {
+                    HandleIsConjured(item);
                 }
             }
+        }
+
+        private static  void HandleIsConjured(Item item)
+        {
+            item.SellIn--;
+            item.Quality-=2;
         }
 
         private static void HandleIsSulFURAES(Item item)
@@ -99,7 +109,7 @@ namespace csharp
 
         private static bool IsRegular(Item item)
         {
-            return !(IsAgedBrie(item.Name) || IsBackStagePasses(item.Name) || IsSulFuares(item.Name));
+            return !(IsAgedBrie(item.Name) || IsBackStagePasses(item.Name) || IsSulFuares(item.Name)|| IsConjured(item.Name));
         }
 
         private static bool IsAgedBrie(string name)
@@ -113,6 +123,10 @@ namespace csharp
         private static bool IsSulFuares(string name)
         {
             return name == SULFURAS;
+        }
+        private static bool IsConjured(string name)
+        {
+            return name == Conjured;
         }
     }
 }
