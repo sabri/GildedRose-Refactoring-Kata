@@ -7,6 +7,9 @@ namespace csharp
         public const string AGED_BRIE = "Aged Brie";
         public const string BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
         public const string SULFURAS = "Sulfuras, Hand of Ragnaros";
+         public const int MaxQuality = 50;
+         public const int BACKSTAGE_PASSES_THERESHOLD01 = 11;
+       public  const int BACKSTAGE_PASSES_THERESHOL02 = 6;
         IList<Item> Items;
         public GildedRose(IList<Item> Items)
         {
@@ -29,23 +32,23 @@ namespace csharp
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (Items[i].Quality < MaxQuality)
                     {
                         Items[i].Quality = Items[i].Quality + 1;
 
                         if (Items[i].Name == BACKSTAGE_PASSES)
                         {
-                            if (Items[i].SellIn < 11)
+                            if (Items[i].SellIn < BACKSTAGE_PASSES_THERESHOLD01)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].Quality < MaxQuality)
                                 {
                                     Items[i].Quality = Items[i].Quality + 1;
                                 }
                             }
 
-                            if (Items[i].SellIn < 6)
+                            if (Items[i].SellIn < BACKSTAGE_PASSES_THERESHOL02)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].Quality < MaxQuality)
                                 {
                                     Items[i].Quality = Items[i].Quality + 1;
                                 }
@@ -80,7 +83,7 @@ namespace csharp
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        if (Items[i].Quality < MaxQuality)
                         {
                             Items[i].Quality = Items[i].Quality + 1;
                         }
