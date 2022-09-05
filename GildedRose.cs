@@ -21,7 +21,7 @@ namespace csharp
         {
             foreach (Item item in Items)
             {
-                if (!IsAgedBrie(item.Name) && !IsBackStagePasses(item.Name))
+                if (!(IsAgedBrie(item.Name)|| IsBackStagePasses(item.Name)))
                 {
                     if (item.Quality > 0)
                     {
